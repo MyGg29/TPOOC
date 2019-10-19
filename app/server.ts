@@ -1,8 +1,8 @@
 import App from './app'
-import ExampleController from './src/example/example.controller'
+import OrderController from './src/controllers/OrderController'
 
 const app = new App([
-  new ExampleController(),
+  new OrderController(),
 ], 1337)
 
 app.listen()

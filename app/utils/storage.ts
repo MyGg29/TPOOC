@@ -2,7 +2,7 @@
 import { createClient, print } from 'redis'
 import { promisify } from 'util'
 
-const client = createClient(6379, 'redis')
+const client = createClient(6379, 'localhost')
 
 client.on('connect', () => {
   console.log('Connected to Redis')
@@ -19,5 +19,5 @@ const delAsync = promisify(client.del).bind(client)
 export {
   getAsync,
   setAsync,
-  delAsync,
+  delAsync
 }

@@ -7,6 +7,7 @@
     "start": "nodemon --exec 'ts-node' ./server.ts"
   },
   "dependencies": {
+    "deepmerge": "^4.1.1",
     "express": "^4.17.1",
     "redis": "^2.8.0"
   },
