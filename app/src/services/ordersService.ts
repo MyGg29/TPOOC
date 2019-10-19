@@ -10,7 +10,7 @@ export default class OrderService implements IOrderService{
     //can't really use async functions in constructors......
   }
 
-  create(newOrder:OrderModel.Order):Promise<number>{
+  async create(newOrder:OrderModel.Order):Promise<number>{
     return new Promise<number>((resolve) =>
         {
           getAsync("orders")
@@ -33,7 +33,7 @@ export default class OrderService implements IOrderService{
         })
   }
 
-  delete(id:number):Promise<void>{
+  async delete(id:number):Promise<void>{
     return new Promise<void>((resolve)=>
         {
           getAsync("orders")
@@ -50,7 +50,7 @@ export default class OrderService implements IOrderService{
                 }) 
         })
   }
-  get(id:number):Promise<OrderModel.Order>{
+  async get(id:number):Promise<OrderModel.Order>{
     return new Promise<OrderModel.Order>(resolve =>
         {
           getAsync("orders")
@@ -70,7 +70,7 @@ export default class OrderService implements IOrderService{
           .then((ordersStr:string)=> resolve(JSON.parse(ordersStr)))
         })
   }
-  update(id:number, order:OrderModel.Order):Promise<void>{
+  async update(id:number, order:OrderModel.Order):Promise<void>{
     return new Promise<void>(resolve =>
         {
           getAsync("orders")
