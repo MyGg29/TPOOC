@@ -19,14 +19,11 @@ export default class OrderServiceProxy implements IOrderService{
     return this.realService.get(id)
   }
   async getAll():Promise<OrderModel.Order[]>{
-    return new Promise<OrderModel.Order[]>((resolve) => {
-      this.realService.getAll().then((orders:OrderModel.Order[]) => {
-        orders.map((order:OrderModel.Order, index:number) => {
-          order.contact = new AnonymousContact()
-        })
-        resolve(orders)
-      })
+    let orders:OrderModel.Order[] = await this.realService.getAll()
+    orders.map((order:OrderModel.Order, index:number) => {
+      order.contact = new AnonymousContact()
     })
+    return orders
   }
   async update(id:number, order:OrderModel.Order):Promise<void>{
     return this.realService.update(id, order)

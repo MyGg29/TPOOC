@@ -26,31 +26,29 @@ export default class OrderController {
   }
 
   public getAll = async (request: Request, response: Response) => {
-    this.orderService.getAll()
-    .then((orders:OrderModel.Order[]) => 
-          response.status(200).json(orders))
+    let orders:OrderModel.Order[] = await this.orderService.getAll()
+    response.status(200).json(orders)
   }
 
   public create = async (request: Request, response: Response) => {
     let newOrder:OrderModel.Order = request.body
-    this.orderService.create(newOrder)
-    .then((newId:number) => response.status(201).json(newId))
+    let newId = await this.orderService.create(newOrder)
+    response.status(201).json(newId)
   }
   
   public update = async (request: Request, response: Response) => {
     let receivedOrder:OrderModel.Order = request.body
-    this.orderService.update(parseInt(request.params.id),receivedOrder)
-    .then(() => response.sendStatus(200))
+    await this.orderService.update(parseInt(request.params.id), receivedOrder)
+    response.sendStatus(200)
   }
 
   public delete = async (request: Request, response: Response) => {
-    this.orderService.delete(parseInt(request.params.id))
-    .then(() => response.sendStatus(200))
+    await this.orderService.delete(parseInt(request.params.id))
+    response.sendStatus(200)
   }
 
   public get = async (request: Request, response: Response) => {
-    this.orderService.get(parseInt(request.params.id))
-    .then((queriedOrder:OrderModel.Order) => 
-          response.status(200).json(queriedOrder))
+    let queriedOrder:OrderModel.Order = await this.orderService.get(parseInt(request.params.id))
+    response.status(200).json(queriedOrder)
   }
 }
