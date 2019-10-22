@@ -1,8 +1,7 @@
-import { delAsync, getAsync, setAsync } from '../../utils/storage'
+import { getAsync, setAsync, delAsync } from '../../utils/Storage/storage'
 import IOrderService from '../services/IOrderService'
-import OrderModel  from '../models/order'
+import OrderModel, { AnonymousContact }  from '../models/order'
 import merge from 'deepmerge'
-import { resolveSoa } from 'dns';
 
 export default class OrderService implements IOrderService{
 

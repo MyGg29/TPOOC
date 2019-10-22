@@ -4,22 +4,20 @@ import {
   Router,
 } from 'express'
 
-import { delAsync, getAsync, setAsync } from '../../utils/storage'
 import OrderModel  from '../models/order'
-import OrderService from '../services/ordersService'
+import OrderServiceProxy from '../services/ordersServiceProxy'
+import IOrderService from '../services/IOrderService'
 
 export default class OrderController {
   public path = '/orders'
   public router = Router()
-  public orderService = new OrderService()
+  public orderService:IOrderService = new OrderServiceProxy()
 
   constructor() {
-    this.intializeRoutes()
-
-
+    this.initializeRoutes()
   }
 
-  public intializeRoutes() {
+  public initializeRoutes() {
     this.router.get(this.path, this.getAll)
     this.router.post(this.path, this.create)
     this.router.put(`${this.path}/:id`, this.update)

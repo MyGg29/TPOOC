@@ -87,3 +87,22 @@ declare module OrderModel {
     }
 }
 export default OrderModel
+
+export class AnonymousContact implements OrderModel.Contact {
+  firstname: string = "anonymous";
+  lastname: string = "anonymous";
+  phone: string = "anonymous";
+  mail: string = "anonymous";
+  billingAddress: OrderModel.BillingAddress = {
+    postalCode: "anonymous",
+    city: "anonymous",
+    addressLine1: "anonymous",
+    addressLine2: "anonymous",
+  };
+  deliveryAddress: OrderModel.DeliveryAddress = {
+    postalCode: "anonymous",
+    city: "anonymous",
+    addressLine1: "anonymous",
+    addressLine2: "anonymous",
+  };
+}
