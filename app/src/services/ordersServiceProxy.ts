@@ -22,7 +22,7 @@ export default class OrderServiceProxy implements IOrderService{
     let orders:OrderModel.Order[] = await this.realService.getAll()
     return this.anonymizeContact(orders)
   }
-  async update(id:number, order:OrderModel.Order):Promise<void>{
+  async update(id:number, order:OrderModel.Order):Promise<Boolean>{
     return this.realService.update(id, order)
   }
   private anonymizeContact(orders:OrderModel.Order[]):OrderModel.Order[]{

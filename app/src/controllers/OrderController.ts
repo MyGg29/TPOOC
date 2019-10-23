@@ -17,7 +17,7 @@ export default class OrderController {
     this.initializeRoutes()
   }
 
-  public initializeRoutes() {
+  private initializeRoutes() {
     this.router.get(this.path, this.getAll)
     this.router.post(this.path, this.create)
     this.router.put(`${this.path}/:id`, this.update)
@@ -32,14 +32,14 @@ export default class OrderController {
 
   public create = async (request: Request, response: Response) => {
     let newOrder:OrderModel.Order = request.body
-    let newId = await this.orderService.create(newOrder)
+    let newId:Number = await this.orderService.create(newOrder)
     response.status(201).json(newId)
   }
   
   public update = async (request: Request, response: Response) => {
     let receivedOrder:OrderModel.Order = request.body
-    await this.orderService.update(parseInt(request.params.id), receivedOrder)
-    response.sendStatus(200)
+    let ok:Boolean = await this.orderService.update(parseInt(request.params.id), receivedOrder)
+    ok ? response.sendStatus(200) : response.sendStatus(404)
   }
 
   public delete = async (request: Request, response: Response) => {
@@ -49,6 +49,7 @@ export default class OrderController {
 
   public get = async (request: Request, response: Response) => {
     let queriedOrder:OrderModel.Order = await this.orderService.get(parseInt(request.params.id))
-    response.status(200).json(queriedOrder)
+    queriedOrder ? response.status(200).json(queriedOrder) 
+                 : response.sendStatus(404)
   }
 }

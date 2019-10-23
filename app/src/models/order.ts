@@ -1,4 +1,4 @@
-//Model describing and order, thanks http://www.json2ts.com/
+//Auto-generated model describing and order, thanks http://www.json2ts.com/
 declare module OrderModel {
 
     export interface Length {
