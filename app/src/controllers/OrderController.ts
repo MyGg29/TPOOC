@@ -38,17 +38,17 @@ export default class OrderController {
   
   public update = async (request: Request, response: Response) => {
     let receivedOrder:OrderModel.Order = request.body
-    let ok:Boolean = await this.orderService.update(parseInt(request.params.id), receivedOrder)
+    let ok:Boolean = await this.orderService.update(Number(request.params.id), receivedOrder)
     ok ? response.sendStatus(200) : response.sendStatus(404)
   }
 
   public delete = async (request: Request, response: Response) => {
-    await this.orderService.delete(parseInt(request.params.id))
+    await this.orderService.delete(Number(request.params.id))
     response.sendStatus(200)
   }
 
   public get = async (request: Request, response: Response) => {
-    let queriedOrder:OrderModel.Order = await this.orderService.get(parseInt(request.params.id))
+    let queriedOrder:OrderModel.Order = await this.orderService.get(Number(request.params.id))
     queriedOrder ? response.status(200).json(queriedOrder) 
                  : response.sendStatus(404)
   }

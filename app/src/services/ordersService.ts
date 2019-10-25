@@ -1,16 +1,17 @@
-import { getAsync, setAsync, delAsync } from '../../utils/Storage/storage'
 import IOrderService from '../services/IOrderService'
 import OrderModel, { AnonymousContact }  from '../models/order'
 import merge from 'deepmerge'
+import OrderRepository from '../models/orderRepository'
 
 export default class OrderService implements IOrderService{
+  ordersRepo:OrderRepository = new OrderRepository()
 
   constructor() {
     //can't really use async functions in constructors......
   }
 
   async create(newOrder:OrderModel.Order):Promise<number>{
-    let orders = JSON.parse(await getAsync("orders")) || []
+    let orders:OrderModel.Order[] = await this.ordersRepo.getOrders()
     let newId = 0
     if(orders.length !== 0){
       //the max id of the current array of order + 1
@@ -21,28 +22,28 @@ export default class OrderService implements IOrderService{
       createdAt:new Date(),
       ...newOrder
     })
-    setAsync("orders",JSON.stringify(orders))
+    this.ordersRepo.setAsync(orders)
     return newId    
   }
 
   async delete(id:number):Promise<void>{
-    let orders = JSON.parse(await getAsync("orders")) || []
+    let orders = await this.ordersRepo.getOrders()
     let orderIndexToDelete:number = orders.findIndex((value:OrderModel.Order) => 
                                                      value.id === id)
     orders.splice(orderIndexToDelete,1)
-    setAsync("orders",JSON.stringify(orders))
+    this.ordersRepo.setAsync(orders)
   }
   async get(id:number):Promise<OrderModel.Order>{
-    let orders = JSON.parse(await getAsync("orders")) || []
+    let orders = await this.ordersRepo.getOrders()
     let queriedOrder:OrderModel.Order = orders.find((value:OrderModel.Order) => 
                                                     value.id === id)
     return queriedOrder
   }
   async getAll():Promise<OrderModel.Order[]>{
-    return JSON.parse(await getAsync("orders")) || []
+    return this.ordersRepo.getOrders()
   }
   async update(id:number, order:OrderModel.Order):Promise<Boolean>{
-    let orders = JSON.parse(await getAsync("orders")) || []
+    let orders = await this.ordersRepo.getOrders()
     let orderToUpdate:OrderModel.Order = orders.find((value:OrderModel.Order) => 
                                                      value.id === id)
     if(!orderToUpdate){
@@ -60,7 +61,7 @@ export default class OrderService implements IOrderService{
                                                      value.id === id)
     orders.splice(orderIndexToUpdate,1,updatedOrder)
 
-    setAsync("orders",JSON.stringify(orders))
+    this.ordersRepo.setAsync(orders)
     return true
   }
 
